@@ -120,6 +120,7 @@
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\TestimoniosController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsuarioController.cs" />
+    <Compile Include="Areas\Admin\Filters\AdminFilters.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -159,6 +160,10 @@
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{1a78e993-5394-4968-b17a-e19734ea0f49}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{2b913023-7d34-4ea3-b263-453a11ebd350}</Project>
       <Name>Model</Name>

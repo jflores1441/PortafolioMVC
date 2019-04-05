@@ -5,11 +5,12 @@ namespace Model
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Linq;//Para poder hacer las consultas a la base de datos
+    using Helper;//Para usar el HashHelper
 
     [Table("Usuario")]
     public partial class Usuario
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
             Experiencia = new HashSet<Experiencia>();
@@ -58,13 +59,62 @@ namespace Model
         [StringLength(50)]
         public string Foto { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Experiencia> Experiencia { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Habilidad> Habilidad { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Testimonio> Testimonio { get; set; }
+
+        public ResponseModel Acceder(string Email, string Password)
+        {
+            var rm = new ResponseModel();
+
+            try
+            {
+                using( var ctx = new proyectoContext())
+                {
+                    Password = HashHelper.MD5(Password);
+                    //Validar que el usuario y la contraseña se hayan escrito correctamente
+                    var usuario = ctx.Usuario.Where(x => x.Email == Email)
+                                             .Where(x => x.Password == Password)
+                                             .SingleOrDefault();
+
+                    if (usuario != null)
+                    {
+                        SessionHelper.AddUserToSession(usuario.id.ToString());
+                        rm.SetResponse(true);
+                    }
+                    else
+                    {
+                        rm.SetResponse(false, "Usuario o contraseña incorrecta");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return rm;
+        } 
+
+        public Usuario ObtenerUsuario(int id)
+        {
+            var usuario = new Usuario();
+
+            try
+            {
+                using(var ctx= new proyectoContext())
+                {
+                    usuario = ctx.Usuario.Where(x => x.id == id).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return usuario;
+        }
     }
 }
