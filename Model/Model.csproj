@@ -50,10 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnexGRID.cs" />
     <Compile Include="Experiencia.cs" />
     <Compile Include="Habilidad.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="proyectoContext.cs" />
+    <Compile Include="ResponseModel.cs" />
     <Compile Include="TablaDato.cs" />
     <Compile Include="Testimonio.cs" />
     <Compile Include="Usuario.cs" />
