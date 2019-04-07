@@ -1,6 +1,9 @@
 ﻿@{
     Layout = null;
     string controlador = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+
+    //Como el usuario no se puede pasar por un ViewBag, ya que no está al nivel de ninguna vista
+    Model.Usuario usuario= new Model.Usuario().ObtenerUsuario(Helper.SessionHelper.GetUser());
 }
 <!DOCTYPE html>
 <html lang="es">
@@ -55,8 +58,8 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img id="user-pic" src="~/Uploads/yin yang.jpg" />                             
-                                <b>Hola</b>, Jessica <span class="caret"></span>
+                                <img id="user-pic" src="~/Uploads/@usuario.Foto" />                             
+                                <b>Hola</b>, @usuario.Nombre <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
