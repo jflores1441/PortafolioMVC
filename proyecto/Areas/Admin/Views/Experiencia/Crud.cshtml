@@ -1,0 +1,65 @@
+﻿@model Experiencia
+
+@{
+    ViewBag.title = (Model.id > 0 ? Model.Nombre: "Nuevo Registro");
+}
+
+<h2 class="page-header">
+    @(Model.id > 0 ? Model.Nombre : "Nuevo Registro")
+</h2>
+
+<ol class="breadcrumb">
+    <li><a href="~/admin/experiencias?tipo=@Model.Tipo">@(Model.id > 0 ? Model.Nombre : "Nuevo Registro")</a></li>
+    <li class="active">@(Model.id > 0 ? Model.Nombre : "Nuevo Registro")</li>
+</ol>
+
+@using (Html.BeginForm("Guardar", "Experiencia", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.Tipo)
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.Usuario_id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nombre)
+        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "label label-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Titulo)
+        @Html.TextBoxFor(model => model.Titulo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Titulo, null, new { @class = "label label-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Desde)
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+            @Html.TextBoxFor(model => model.Desde, new { @class = "form-control datepicker" })
+            @Html.ValidationMessageFor(model => model.Desde, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Hasta)
+        <div class="input-group">
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+            @Html.TextBoxFor(model => model.Hasta, new { @class = "form-control datepicker" })
+            @Html.ValidationMessageFor(model => model.Hasta, null, new { @class = "label label-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Descripcion)
+        @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Descripcion, null, new { @class = "label label-danger" })
+    </div>
+
+    <div class="text-right">
+        <button type="submit" data-ajax="true" class="btn btn-primary">Guardar</button>
+    </div>
+}

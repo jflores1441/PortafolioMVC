@@ -1,16 +1,21 @@
 ﻿
 @{
-
+    int tipo = ViewBag.tipo;
 }
 
 <div id="experiencia" class="page">
 
     <h1 class="page-header remove-margin">
-        <a class="btn btn-primary pull-right" href="#">Agregar</a>
+        <a class="btn btn-primary pull-right" href="~/admin/experiencia/crud?tipo=@tipo">Agregar</a>
         @ViewBag.Title
     </h1>
 
-    <table class="table table-striped table-bordered">
+
+    <div id="list"></div>
+
+
+
+    @*<table class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>Empresa</th>
@@ -37,5 +42,40 @@
                 <td>2015-05-02</td>
             </tr>
         </tbody>
-    </table>
+    </table>*@
 </div>
+
+
+<script>
+    $(document).ready(function (){
+        $("#list").anexGrid({
+            columnas: [
+                { leyenda: 'Nombre', columna: 'Nombre', ordenable: true },
+                { leyenda: 'Titulo', columna: 'Titulo', ordenable: true },
+                { leyenda: 'Desde', columna: 'Desde', ordenable: true },
+                { leyenda: 'Hasta', columna: 'Hasta', ordenable: true }
+            ],
+
+            modelo: [
+                {
+                    propiedad: 'Nombre',
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/experiencia/crud/")' + obj.id,
+                            contenido: valor
+                        });
+                    }
+                }, 
+                { propiedad: 'Titulo' },
+                { propiedad: 'Desde' },
+                { propiedad: 'Hasta' },
+            ],
+
+            url:'@Url.Content("~/admin/experiencia/listar?tipo=" + tipo)',
+            paginable: true,
+            limite: [20, 60, 100],
+            columna:'id',
+            columna_orden: 'DESC'
+        });
+    })
+</script>
