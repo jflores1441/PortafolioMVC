@@ -19,6 +19,7 @@
                 <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Información</a></li>
                 <li role="presentation"><a href="#ubicacion" aria-controls="ubicacion" role="tab" data-toggle="tab">Ubicación</a></li>
                 <li role="presentation"><a href="#social" aria-controls="social" role="tab" data-toggle="tab">Social</a></li>
+                <li role="presentation"><a href="#contra" aria-controls="contra" role="tab" data-toggle="tab">Cambio de Contraseña</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -33,14 +34,17 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Apellido)
                         @Html.TextBoxFor(model => model.Apellido, new { @class = "form-control", placeholder = "Ingrese su apellido" })
+                        @Html.ValidationMessageFor(model => model.Apellido, null, new { @class="label label-danger"})
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email)
                         @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Ingrese su correo" })
+                        @Html.ValidationMessageFor(model => model.Email, null, new { @class="label label-danger"})
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Telefono)
                         @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control", placeholder = "Ingrese su telefono" })
+                        @Html.ValidationMessageFor(model => model.Telefono, null, new { @class="label label-danger"})
                     </div>
                     <div class="form-group">
                         <label>Foto de perfil</label>
@@ -49,21 +53,24 @@
                 </div>
                 <div role="tabpanel" class="tab-pane" id="ubicacion">
                     <div class="form-group">
-                        <label>País</label>
+                        @Html.LabelFor(model => model.Pais_id)
                         <select name="Pais_id" class="form-control">
                             @foreach (var p in paises)
                             {
                                 <option @(Model.Pais_id == Convert.ToInt32(p.Valor) ? "selected" : "") value="@p.Valor">@p.Descripcion</option>
                             }
                         </select>
+                        @Html.ValidationMessageFor(model => model.Pais_id, null, new { @class="label label-danger"})
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Ciudad)
                         @Html.TextBoxFor(model => model.Ciudad, new { @class = "form-control", placeholder = "Ingrese su ciudad" })
+                        @Html.ValidationMessageFor(model => model.Ciudad, null, new { @class="label label-danger"})
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Direccion)
                         @Html.TextBoxFor(model => model.Direccion, new { @class = "form-control", placeholder = "Ingrese su dirección" })
+                        @Html.ValidationMessageFor(model => model.Direccion, null, new { @class="label label-danger"})
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="social">
@@ -74,6 +81,7 @@
                                 <i class="fa fa-facebook"></i>
                             </span>
                             @Html.TextBoxFor(model => model.Facebook, new { @class = "form-control", placeholder = "Ingrese su Facebook" })
+                            @Html.ValidationMessageFor(model => model.Facebook, null, new { @class="label label-danger"})
                         </div>
                     </div>
                     <div class="form-group">
@@ -83,6 +91,7 @@
                                 <i class="fa fa-twitter"></i>
                             </span>
                             @Html.TextBoxFor(model => model.Twitter, new { @class = "form-control", placeholder = "Ingrese su Twitter" })
+                            @Html.ValidationMessageFor(model => model.Twitter, null, new { @class="label label-danger"})
                         </div>
                     </div>
                     <div class="form-group">
@@ -92,8 +101,13 @@
                                 <i class="fa fa-youtube"></i>
                             </span>
                             @Html.TextBoxFor(model => model.YouTube, new { @class = "form-control", placeholder = "Ingrese su YouTube" })
+                            @Html.ValidationMessageFor(model => model.YouTube, null, new { @class="label label-danger"})
                         </div>
                     </div>
+                </div>
+                <div id="contra" class="tab-pane">
+                    @Html.LabelFor(model => model.Password)                  
+                    @*@Html.TextBoxFor(model => model.Password, new { @class="form-control", placeholder="Ingrese su nueva contraseña"})*@
                 </div>
             </div>
 
