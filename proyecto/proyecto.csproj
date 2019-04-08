@@ -109,6 +109,7 @@
     <Content Include="Areas\Admin\Assets\js\jquery.validate.min.js" />
     <Content Include="Areas\Admin\Assets\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="Uploads\20190407200723.jpg" />
     <Content Include="Uploads\yin yang.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>

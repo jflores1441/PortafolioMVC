@@ -4,8 +4,12 @@ namespace Model
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
     using System.Data.Entity.Spatial;
+    using System.Data.Entity.Validation;
+    using System.IO;
     using System.Linq;//Para poder hacer las consultas a la base de datos
+    using System.Web;//Para poder usar HttpPostedFileBase Foto
     using Helper;//Para usar el HashHelper
 
     [Table("Usuario")]
@@ -115,6 +119,55 @@ namespace Model
             }
 
             return usuario;
+        }
+
+        public ResponseModel Guardar(HttpPostedFileBase Foto)
+        {
+            var rm = new ResponseModel();
+
+            try
+            {
+                using(var ctx= new proyectoContext())
+                {              
+                    ctx.Configuration.ValidateOnSaveEnabled = false;//Indicarle al contexto que las validaciones cuando se guarde, esten desabilitadas, debido a que queremos que ignore la propiedad Password
+
+                    var eUsuario = ctx.Entry(this);
+                    eUsuario.State = EntityState.Modified;
+
+                    if(this.Password == null)
+                        eUsuario.Property(x => x.Password).IsModified = false;//Le indicamos que queremos que ignore la propiedad Password, y que no la valide
+
+                    if (Foto != null)
+                    {
+                        //System.IO para usar Path
+                        string archivo = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(Foto.FileName);
+
+                        Foto.SaveAs(HttpContext.Current.Server.MapPath("~/Uploads/" + archivo));
+
+                        this.Foto = archivo;
+                    }
+                    else
+                        eUsuario.Property(x => x.Foto).IsModified = false;
+
+                    ctx.SaveChanges();
+                    rm.SetResponse(true);
+                }
+            }
+
+            //Referencia using System.Data.Entity.Validation;
+            //Podemos ver más a detalle la excepcion del EF 
+            //catch (DbEntityValidationException e)
+            //{
+            //    throw;
+            //}
+
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return rm;
         }
     }
 }
