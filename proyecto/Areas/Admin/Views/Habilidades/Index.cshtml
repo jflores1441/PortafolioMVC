@@ -6,42 +6,99 @@
 <div id="habilidades" class="page">
 
     <h1 class="page-header remove-margin">
-        <a class="btn btn-primary pull-right" href="#">Agregar</a>
-        Habilidades obtenidas
+        <a class="btn btn-primary pull-right" href="~/admin/habilidades/crud">Agregar</a>
+        Habilidades
     </h1>
 
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>Habilidad</th>
-                <th>Nivel</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <a href="#">PHP</a>
-                </td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%;">
-                            60%
+    <div id="list"></div>
+
+    @*<table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Habilidad</th>
+                    <th>Nivel</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <a href="#">PHP</a>
+                    </td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%;">
+                                60%
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="#">ASP.NET MVC</a>
-                </td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%;">
-                            80%
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#">ASP.NET MVC</a>
+                    </td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%;">
+                                80%
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>*@
+
 </div>
+
+<script>
+    $(document).ready(function () {
+        var agrid = $("#list").anexGrid({
+            columnas: [
+                { leyenda: 'Nombre', columna: 'Nombre', ordenable: true },
+                { leyenda: 'Dominio', columna: 'Dominio', ordenable: true, style: 'width:500px' },
+                { style: 'width:60px' },
+            ],
+            modelo: [
+                {
+                    propiedad: 'Nombre', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/habilidades/crud/")' + obj.id,
+                            contenido: valor
+                        });
+                    }
+                },
+                {
+                    propiedad: 'Dominio', formato: function (tr, obj, valor) {
+                        return '<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="' + valor + '" aria-valuemin="0" aria-valuemax="100" style="width:' + valor + '%;">' + valor +'%</div></div>';
+                    }
+                },
+                {
+                    propiedad: 'Nombre', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/habilidades/eliminar/")' + obj.id,
+                            contenido: '<i class="fa fa-trash"></i>',
+                            class: 'btn btn-danger btn-xs btn-block btn-eliminar',
+                        });
+                    }
+                },
+            ],
+            url: '@Url.Content("~/admin/habilidades/listar")',
+            paginable: true,
+            limite: [20, 60, 100],
+            columna: 'id',
+            columna_orden: 'DESC'
+        });
+
+        agrid.tabla().on('click', '.btn-eliminar', function () {
+            if (!confirm('¿Está seguro de eliminar este registro?'))
+            {
+                return;
+            }
+
+            $.post($(this).attr('href'), function (r) {
+                if (r.response) agrid.refrescar();
+            }, 'json')
+
+            return false;
+        })
+    })
+</script>
