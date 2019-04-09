@@ -109,7 +109,14 @@ namespace Model
             return rm;
         }
 
-        public AnexGRIDResponde Listar(AnexGRID grid, int tipo)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="tipo">Indica si es para la tabla de TrabajosRealizados=1, EstudiosPrevios=2</param>
+        /// <param name="usuario_id">Para Filtrar por el usuario que ha ingresado</param>
+        /// <returns></returns>
+        public AnexGRIDResponde Listar(AnexGRID grid, int tipo, int usuario_id)
         {
             try
             {
@@ -119,7 +126,8 @@ namespace Model
 
                     grid.Inicializar();
 
-                    var query = ctx.Experiencia.Where(x => x.Tipo == tipo);
+                    var query = ctx.Experiencia.Where(x => x.Tipo == tipo)
+                                                .Where(x => x.Usuario_id == usuario_id);
 
                     //Ordenamiento
 

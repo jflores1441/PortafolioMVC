@@ -24,7 +24,7 @@ namespace proyecto.Areas.Admin.Controllers
 
         public JsonResult Listar(AnexGRID grid, int tipo)
         {
-            return Json(experiencia.Listar(grid, tipo));
+            return Json(experiencia.Listar(grid, tipo, SessionHelper.GetUser()));
         }
 
         /// <summary>
@@ -66,17 +66,7 @@ namespace proyecto.Areas.Admin.Controllers
 
         public JsonResult Eliminar(int id)
         {
-            var rm = new ResponseModel();
-
-            rm = experiencia.Eliminar(id);
-
-            if (rm.response)
-            {
-                rm.href = Url.Content("self");
-
-
-            }
-            return Json(rm);
+            return Json(experiencia.Eliminar(id));
         }
     }
 }

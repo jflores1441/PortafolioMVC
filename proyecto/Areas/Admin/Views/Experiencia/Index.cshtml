@@ -47,35 +47,55 @@
 
 
 <script>
-    $(document).ready(function (){
-        $("#list").anexGrid({
+    $(document).ready(function () {
+        var agrid = $("#list").anexGrid({
             columnas: [
                 { leyenda: 'Nombre', columna: 'Nombre', ordenable: true },
                 { leyenda: 'Titulo', columna: 'Titulo', ordenable: true },
                 { leyenda: 'Desde', columna: 'Desde', ordenable: true },
-                { leyenda: 'Hasta', columna: 'Hasta', ordenable: true }
+                { leyenda: 'Hasta', columna: 'Hasta', ordenable: true },
+                { style: 'width:60px' },
             ],
-
             modelo: [
                 {
-                    propiedad: 'Nombre',
-                    formato: function (tr, obj, valor) {
+                    propiedad: 'Nombre', formato: function (tr, obj, valor) {
                         return anexGrid_link({
                             href: '@Url.Content("~/admin/experiencia/crud/")' + obj.id,
                             contenido: valor
                         });
                     }
-                }, 
+                },
                 { propiedad: 'Titulo' },
                 { propiedad: 'Desde' },
                 { propiedad: 'Hasta' },
+                {
+                    propiedad: 'Nombre', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/experiencia/eliminar/")' + obj.id,
+                            contenido: '<i class="fa fa-trash"></i>',
+                            class: 'btn btn-danger btn-xs btn-block btn-eliminar',
+                        });
+                    }
+                },
             ],
-
-            url:'@Url.Content("~/admin/experiencia/listar?tipo=" + tipo)',
+            url: '@Url.Content("~/admin/experiencia/listar?tipo=" + tipo)',
             paginable: true,
             limite: [20, 60, 100],
-            columna:'id',
+            columna: 'id',
             columna_orden: 'DESC'
         });
+
+        agrid.tabla().on('click', '.btn-eliminar', function () {
+            if (!confirm('¿Está seguro de eliminar este registro?'))
+            {
+                return;
+            }
+
+            $.post($(this).attr('href'), function (r) {
+                if (r.response) agrid.refrescar();
+            }, 'json')
+
+            return false;
+        })
     })
 </script>
