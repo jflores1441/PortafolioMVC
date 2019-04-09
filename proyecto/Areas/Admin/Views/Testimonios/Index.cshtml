@@ -9,7 +9,9 @@
         Testimonios
     </h1>
 
-    <table class="table table-striped table-bordered">
+    <div id="list"></div>
+
+    @*<table class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>Nombre</th>
@@ -54,6 +56,59 @@
                 <td>Curso de $&/$&#!$!"#$%#&@@ ....</td>
             </tr>
         </tbody>
-    </table>
+    </table>*@
 </div>
 
+<script>
+    $(document).ready(function () {
+        var agrid = $("#list").anexGrid({
+            columnas: [
+                { leyenda: 'Nombre', columna: 'Nombre', ordenable: true },
+                { leyenda: 'IP', columna: 'IP', ordenable: true },
+                { leyenda: 'Comentario', columna: 'Comentario', ordenable: false },
+                { leyenda: 'Fecha', columna: 'Fecha', ordenable: true },
+                { style: 'width:60px' },
+            ],
+            modelo: [
+                {
+                    propiedad: 'Nombre', formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/testimonios/crud/")' + obj.id,
+                            contenido: valor
+                        });
+                    }
+                },
+                { propiedad: 'IP' },
+                { propiedad: 'Comentario' },
+                { propiedad: 'Fecha' },
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/admin/testimonios/eliminar/")' + obj.id,
+                            contenido: '<i class="fa fa-trash"></i>',
+                            class: 'btn btn-danger btn-xs btn-block btn-eliminar',
+                        });
+                    }
+                },
+            ],
+            url: '@Url.Content("~/admin/testimonios/listar")',
+            paginable: true,
+            limite: [20, 60, 100],
+            columna: 'id',
+            columna_orden: 'DESC'
+        });
+
+        agrid.tabla().on('click', '.btn-eliminar', function () {
+            if (!confirm('¿Está seguro de eliminar este registro?'))
+            {
+                return;
+            }
+
+            $.post($(this).attr('href'), function (r) {
+                if (r.response) agrid.refrescar();
+            }, 'json')
+
+            return false;
+        })
+    })
+</script>

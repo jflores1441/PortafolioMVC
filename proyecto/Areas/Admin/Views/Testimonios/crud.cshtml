@@ -1,0 +1,48 @@
+﻿@model Testimonio
+
+@{
+    ViewBag.title = (Model.id > 0 ? Model.Nombre : "Nuevo Registro");
+}
+
+<h2 class="page-header">
+    @(Model.id > 0 ? Model.Nombre : "Nuevo Registro")
+</h2>
+
+<ol class="breadcrumb">
+    <li><a href="~/admin/testimonios">Testimonios</a></li>
+    <li class="active">@(Model.id > 0 ? Model.Nombre : "Nuevo Registro")</li>
+</ol>
+
+@using (Html.BeginForm("Guardar", "Testimonios", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.Usuario_id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nombre)
+        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Nombre, null, new { @class = "label label-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IP)
+        @Html.TextBoxFor(model => model.IP, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.IP, null, new { @class = "label label-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Comentario)
+        @Html.TextBoxFor(model => model.Comentario, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Comentario, null, new { @class = "label label-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Fecha)
+        @Html.TextBoxFor(model => model.Fecha, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Fecha, null, new { @class = "label label-danger" })
+    </div>
+
+    <div class="text-right">
+        <button type="submit" data-ajax="true" class="btn btn-primary">Guardar</button>
+    </div>
+}

@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Model;
+using Helper;
 
 namespace proyecto.Controllers
 {
     public class DefaultController : Controller
     {
-        // GET: Default
+
+        private Usuario usuario = new Usuario();
+
         public ActionResult Index()
-        {
-            return View();
+        {           
+            return View(usuario.ObtenerUsuario(SessionHelper.GetUser()));
         }
+
     }
 }

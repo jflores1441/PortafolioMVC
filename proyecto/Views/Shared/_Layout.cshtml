@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link href="~/assets/css/anexsoft-theme/style.css" type="text/css" rel="stylesheet" />
+    <script src="~/assets/js/jquery.js"></script>
+</head>
+<body>
+
+    <div id="cv-container">
+        @Html.Partial("~/views/shared/_user.cshtml")
+        <div id="content">
+            @Html.Partial("~/views/shared/_MenuAdicional.cshtml")
+            <div class="content-container container-fluid">
+
+                @RenderBody()
+
+                <footer id="footer">
+                    2019 - Copyrigth by  <a href="">Jessica Flores</a>
+                </footer>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/jquery.form.js"></script>
+    <script src="~/assets/js/ini.js"></script>
+    <script src="~/assets/js/jquery.validate.min.js"></script>
+    <script src="~/assets/js/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
