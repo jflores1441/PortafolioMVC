@@ -50,6 +50,12 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.Core.2.0.0\lib\net45\Rotativa.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Rotativa.MVC, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.MVC.2.0.3\lib\net45\Rotativa.MVC.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -123,6 +129,7 @@
     <Content Include="assets\js\jquery.validate.min.js" />
     <Content Include="assets\js\jquery.validate.unobtrusive.min.js" />
     <Content Include="Global.asax" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Uploads\20190407200723.jpg" />
     <Content Include="Uploads\yin yang.jpg" />
     <Content Include="Web.config" />
@@ -201,6 +208,7 @@
     <Content Include="assets\scss\_rotated-flipped.scss" />
     <Content Include="assets\scss\_stacked.scss" />
     <Content Include="assets\scss\_variables.scss" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -208,6 +216,7 @@
     <Content Include="Views\Shared\_User.cshtml" />
     <Content Include="Views\Shared\_MenuAdicional.cshtml" />
     <Content Include="Views\Shared\_Contacto.cshtml" />
+    <Content Include="Views\Default\PDF.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -228,6 +237,9 @@
       <Project>{2b913023-7d34-4ea3-b263-453a11ebd350}</Project>
       <Name>Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

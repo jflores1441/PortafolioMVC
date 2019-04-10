@@ -8,6 +8,7 @@ using Helper;
 using proyecto.App_Start;
 using proyecto.ViewModels;
 using System.Net.Mail;
+using Rotativa.MVC;
 
 namespace proyecto.Controllers
 {
@@ -60,6 +61,17 @@ namespace proyecto.Controllers
             }
 
             return Json(rm);
+        }
+
+        public ActionResult ExportaAPDF()
+        {
+            return new ActionAsPdf("PDF");
+        }
+
+        public ActionResult PDF()
+        {
+            return View(usuario.ObtenerUsuario(FrontOfficeStartUp.UsuarioVisualizando(),true));
+
         }
 
     }

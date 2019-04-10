@@ -1,32 +1,18 @@
 ﻿@model Usuario
 
-<div class="options-container-fixed">
+<div class="options-container-fixed hidden-print">
     <div class="options">
         <div class="row">
             <div class="col-sm-12">
-                <a href="#" class="btn btn-danger">
+                <a href="~/default/ExportaAPDF" target="_blank" class="btn btn-danger">
                     <i class="fa fa-file-pdf-o"></i> <span class="hidden-xs hidden-sm">Descargar en PDF</span>
                 </a>
-                <button class="btn btn-primary">
+                <button class="btn btn-primary" onclick="window.print();">
                     <i class="fa fa-print"></i> <span class="hidden-xs hidden-sm">Imprimir</span>
                 </button>
                 <button class="btn btn-default" data-toggle="modal" data-target="#mContacto">
                     <i class="fa fa-envelope-o"></i> <span class="hidden-xs hidden-sm">Contactar</span>
                 </button>
-                @*@if (Model.Facebook != null)
-                {
-
-                }
-
-                @if (Model.Twitter != null)
-                {
-                    
-                }
-
-                @if (Model.YouTube != null)
-                {
-                    
-                }*@
 
                 <a target="_blank" href="@Model.Facebook" title="Facebook" class="btn btn-default"><i class="fa fa-facebook-official"></i></a>
                 <a target="_blank" href="@Model.Twitter" title="Twitter" class="btn btn-default"><i class="fa fa-twitter"></i></a>
