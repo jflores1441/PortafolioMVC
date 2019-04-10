@@ -69,13 +69,16 @@ namespace Model
 
         public virtual ICollection<Testimonio> Testimonio { get; set; }
 
+        [NotMapped]
+        public TablaDato Pais { get; set; }
+
         public ResponseModel Acceder(string Email, string Password)
         {
             var rm = new ResponseModel();
 
             try
             {
-                using( var ctx = new proyectoContext())
+                using (var ctx = new proyectoContext())
                 {
                     Password = HashHelper.MD5(Password);
                     //Validar que el usuario y la contraseña se hayan escrito correctamente
@@ -100,17 +103,32 @@ namespace Model
             }
 
             return rm;
-        } 
+        }
 
-        public Usuario ObtenerUsuario(int id)
+        public Usuario ObtenerUsuario(int id, bool includes = false)
         {
             var usuario = new Usuario();
 
             try
             {
-                using(var ctx= new proyectoContext())
+                using (var ctx = new proyectoContext())
                 {
-                    usuario = ctx.Usuario.Where(x => x.id == id).SingleOrDefault();
+                    if (!includes)
+                    {
+                        usuario = ctx.Usuario.Where(x => x.id == id).SingleOrDefault();
+                    }
+                    else
+                    {
+                        //el nombre dentro del Include debe ser el mismo que el de la relacion con la tabla Usuario
+                        usuario = ctx.Usuario.Include("Experiencia")
+                                             .Include("Habilidad")
+                                             .Include("Testimonio")
+                                             .Where(x => x.id == id)
+                                             .SingleOrDefault();
+                    }
+
+                    //Trayendo un dato de manera manual sin usar relacion include
+                    usuario.Pais = new TablaDato().Obtener("pais", usuario.Pais_id.ToString());
                 }
             }
             catch (Exception)
@@ -127,14 +145,14 @@ namespace Model
 
             try
             {
-                using(var ctx= new proyectoContext())
-                {              
+                using (var ctx = new proyectoContext())
+                {
                     ctx.Configuration.ValidateOnSaveEnabled = false;//Indicarle al contexto que las validaciones cuando se guarde, esten desabilitadas, debido a que queremos que ignore la propiedad Password
 
                     var eUsuario = ctx.Entry(this);
                     eUsuario.State = EntityState.Modified;
 
-                    if(this.Password == null)
+                    if (this.Password == null)
                         eUsuario.Property(x => x.Password).IsModified = false;//Le indicamos que queremos que ignore la propiedad Password, y que no la valide
 
                     if (Foto != null)

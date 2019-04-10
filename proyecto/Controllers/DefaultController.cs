@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Model;
 using Helper;
+using proyecto.App_Start;
 
 namespace proyecto.Controllers
 {
@@ -15,7 +16,7 @@ namespace proyecto.Controllers
 
         public ActionResult Index()
         {           
-            return View(usuario.ObtenerUsuario(SessionHelper.GetUser()));
+            return View(usuario.ObtenerUsuario(FrontOfficeStartUp.UsuarioVisualizando(),true));
         }
 
     }

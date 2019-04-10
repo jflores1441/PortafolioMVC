@@ -1,102 +1,81 @@
-﻿
+﻿@model Usuario
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2 class="title title-blue">
-    <i class="fa fa-briefcase pull-right"></i>
-    Empleos previos
-</h2>
-<div class="list well well-sm">
-    <div class="list-heading">
-        Company Name <small class="list-heading-date">2014-04-02 - ACTUALMENTE</small>
-        <span class="list-heading-subtitle">ASP.NET MVC Developer</span>
-    </div>
-    <div class="list-description">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-</div>
-<div class="list well well-sm">
-    <div class="list-heading">
-        Company Name <small class="list-heading-date">2013-04-02 - 2014-04-02</small>
-        <span class="list-heading-subtitle">PHP Developer</span>
-    </div>
-    <div class="list-description">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-</div>
 
-<h2 class="title title-yellow">
-    <i class="fa fa-line-chart pull-right"></i>
-    Habilidades obtenidas
-</h2>
-<ul class="list-group">
-    <li class="list-group-item">
-        <div class="row">
-            <div class="col-lg-2">
-                <b>Programación con PHP</b>
-            </div>
-            <div class="col-lg-10">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
-                </div>
-            </div>
-        </div>
-    </li>
-    <li class="list-group-item">
-        <div class="row">
-            <div class="col-lg-2">
-                <b>Programación con PHP</b>
-            </div>
-            <div class="col-lg-10">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
-                </div>
-            </div>
-        </div>
-    </li>
-    <li class="list-group-item">
-        <div class="row">
-            <div class="col-lg-2">
-                <b>Programación con PHP</b>
-            </div>
-            <div class="col-lg-10">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
-                </div>
-            </div>
-        </div>
-    </li>
-    <li class="list-group-item">
-        <div class="row">
-            <div class="col-lg-2">
-                <b>Programación con PHP</b>
-            </div>
-            <div class="col-lg-10">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
-                </div>
-            </div>
-        </div>
-    </li>
-</ul>
+@if (Model.Experiencia.Count > 0)
+{
+    <h2 class="title title-blue">
+        <i class="fa fa-briefcase pull-right"></i>
+        Empleos previos
+    </h2>
 
-<h2 class="title title-green">
-    <i class="fa fa-university pull-right"></i>
-    Estudios realizados
-</h2>
-<div class="list well well-sm">
-    <div class="list-heading">
-        Idiomas Católica <small class="list-heading-date">2014-04-02 - ACTUALMENTE</small>
-        <span class="list-heading-subtitle">Ingles técnico</span>
-    </div>
-</div>
-<div class="list well well-sm">
-    <div class="list-heading">
-        iSILTECH <small class="list-heading-date">2014-04-02 - ACTUALMENTE</small>
-        <span class="list-heading-subtitle">Java Enterprise Developer</span>
-    </div>
-</div>
+    foreach (var item in Model.Experiencia.Where(x => x.Tipo == 1).ToList())
+    {
+        <div class="list well well-sm">
+            <div class="list-heading">
+                @item.Nombre <small class="list-heading-date">@item.Desde - @(item.Hasta == null ? "Actualmente" : item.Hasta )</small>
+                <span class="list-heading-subtitle">@item.Titulo</span>
+            </div>
+            <div class="list-description">
+                <p>@item.Descripcion</p>
+            </div>
+        </div>
+    }
+}
+
+
+@if (Model.Habilidad.Count > 0)
+{
+    <h2 class="title title-yellow">
+        <i class="fa fa-line-chart pull-right"></i>
+        Habilidades obtenidas
+    </h2>
+
+    <ul class="list-group">
+        @foreach (var item in Model.Habilidad)
+        {
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <b>@item.Nombre</b>
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="@item.Dominio" aria-valuemin="0" aria-valuemax="100" style="width: @item.Dominio%">@item.Dominio%</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}
+
+
+@if (Model.Experiencia.Count > 0)
+{
+    <h2 class="title title-green">
+        <i class="fa fa-university pull-right"></i>
+        Estudios realizados
+    </h2>
+
+    foreach (var item in Model.Experiencia.Where(x => x.Tipo == 2).ToList())
+    {
+        <div class="list well well-sm">
+            <div class="list-heading">
+                @item.Nombre <small class="list-heading-date">@item.Desde - @(item.Hasta == null ? "Actualmente" : item.Hasta )</small>
+                <span class="list-heading-subtitle">@item.Titulo</span>
+            </div>
+            <div class="list-description">
+                <p>@item.Descripcion</p>
+            </div>
+        </div>
+    }
+}
+
+
 
 <h2 class="title title-red">
     <i class="fa fa-comment pull-right"></i>
@@ -118,22 +97,30 @@
         Enviar
     </button>
 </div>
-
 <hr />
 
-<div class="media">
-    <div class="media-body">
-        <h4 class="media-heading">
-            Jose Ramirez <small>Enviado el 2015-04-14</small>
-        </h4>
-        <div class="well well-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </div>
-        <h4 class="media-heading">
-            Jose Ramirez <small>Enviado el 2015-04-14</small>
-        </h4>
-        <div class="well well-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+@if (Model.Testimonio.Count > 0)
+{
+    <div class="media">
+        <div class="media-body">
+            @foreach (var item in Model.Testimonio)
+            {
+                <h4 class="media-heading">
+                    @item.Nombre <small>Enviado el @item.Fecha</small>
+                </h4>
+                <div class="well well-sm">
+                   @item.Comentario
+                </div>
+            }
         </div>
     </div>
-</div>
+}
+
+
+
+
+
+
+
+
+
